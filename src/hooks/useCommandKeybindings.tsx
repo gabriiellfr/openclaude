@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 /**
  * Component that registers keybinding handlers for command bindings.
  *

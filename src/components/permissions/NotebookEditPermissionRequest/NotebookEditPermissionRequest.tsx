@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import { basename } from 'path';
 import React from 'react';
 import type { z } from 'zod/v4';

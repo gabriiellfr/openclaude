@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 /**
  * HooksConfigMenu is a read-only browser for configured hooks.
  *

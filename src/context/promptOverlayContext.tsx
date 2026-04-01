@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 /**
  * Portal for content that floats above the prompt so it escapes
  * FullscreenLayout's bottom-slot `overflowY:hidden` clip.

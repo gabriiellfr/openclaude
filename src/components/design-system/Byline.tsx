@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import React, { Children, isValidElement } from 'react';
 import { Text } from '../../ink.js';
 type Props = {

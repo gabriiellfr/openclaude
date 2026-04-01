@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import { useEffect } from 'react';
 import { useNotifications } from 'src/context/notifications.js';
 import { useAppState, useSetAppState } from 'src/state/AppState.js';

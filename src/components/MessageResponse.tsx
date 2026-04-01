@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import * as React from 'react';
 import { useContext } from 'react';
 import { Box, NoSelect, Text } from '../ink.js';

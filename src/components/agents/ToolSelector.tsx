@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import figures from 'figures';
 import React, { useCallback, useMemo, useState } from 'react';
 import { mcpInfoFromString } from 'src/services/mcp/mcpStringUtils.js';

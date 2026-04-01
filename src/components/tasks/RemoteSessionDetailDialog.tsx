@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import figures from 'figures';
 import React, { useMemo, useState } from 'react';
 import type { SDKMessage } from 'src/entrypoints/agentSdkTypes.js';

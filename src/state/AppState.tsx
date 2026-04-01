@@ -1,7 +1,8 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import { feature } from 'bun:bundle';
-import React, { useContext, useEffect, useEffectEvent, useState, useSyncExternalStore } from 'react';
+import React, { useContext, useEffect, useState, useSyncExternalStore } from 'react';
 import { MailboxProvider } from '../context/mailbox.js';
+import { useEffectEventCompat } from '../hooks/useEffectEventCompat.js';
 import { useSettingsChange } from '../hooks/useSettingsChange.js';
 import { logForDebugging } from '../utils/debug.js';
 import { createDisabledBypassPermissionsContext, isBypassPermissionsModeDisabled } from '../utils/permissions/permissionSetup.js';
@@ -87,7 +88,7 @@ export function AppStateProvider(t0) {
   } else {
     t4 = $[7];
   }
-  const onSettingsChange = useEffectEvent(t4);
+  const onSettingsChange = useEffectEventCompat(t4);
   useSettingsChange(onSettingsChange);
   let t5;
   if ($[8] !== children) {

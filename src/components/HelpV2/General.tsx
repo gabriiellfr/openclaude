@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import * as React from 'react';
 import { Box, Text } from '../../ink.js';
 import { PromptInputHelpMenu } from '../PromptInput/PromptInputHelpMenu.js';

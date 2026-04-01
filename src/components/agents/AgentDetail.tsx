@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';

@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import React from 'react';
 import { renderPlaceholder } from '../hooks/renderPlaceholder.js';
 import { usePasteHandler } from '../hooks/usePasteHandler.js';

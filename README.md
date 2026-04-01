@@ -168,6 +168,63 @@ You can also use `ANTHROPIC_MODEL` to override the model name. `OPENAI_MODEL` ta
 
 ---
 
+## Runtime Hardening
+
+Use these commands to keep the CLI stable and catch environment mistakes early:
+
+```bash
+# quick startup sanity check
+bun run smoke
+
+# validate provider env + reachability
+bun run doctor:runtime
+
+# print machine-readable runtime diagnostics
+bun run doctor:runtime:json
+
+# persist a diagnostics report to reports/doctor-runtime.json
+bun run doctor:report
+
+# full local hardening check (typecheck + smoke + runtime doctor)
+bun run hardening:check
+
+# strict hardening (includes project-wide typecheck)
+bun run hardening:strict
+```
+
+Notes:
+- `doctor:runtime` fails fast if `CLAUDE_CODE_USE_OPENAI=1` with a placeholder key (`SUA_CHAVE`) or a missing key for non-local providers.
+- Local providers (for example `http://localhost:11434/v1`) can run without `OPENAI_API_KEY`.
+
+### Provider Launch Profiles
+
+Use profile launchers to avoid repeated environment setup:
+
+```bash
+# one-time profile bootstrap (auto-detect ollama, otherwise openai)
+bun run profile:init
+
+# openai bootstrap with explicit key
+bun run profile:init -- --provider openai --api-key sk-...
+
+# ollama bootstrap with custom model
+bun run profile:init -- --provider ollama --model llama3.1:8b
+
+# launch using persisted profile (.openclaude-profile.json)
+bun run dev:profile
+
+# OpenAI profile (requires OPENAI_API_KEY in your shell)
+bun run dev:openai
+
+# Ollama profile (defaults: localhost:11434, llama3.1:8b)
+bun run dev:ollama
+```
+
+`dev:openai` and `dev:ollama` run `doctor:runtime` first and only launch the app if checks pass.
+For `dev:ollama`, make sure Ollama is running locally before launch.
+
+---
+
 ## What Works
 
 - **All tools**: Bash, FileRead, FileWrite, FileEdit, Glob, Grep, WebFetch, WebSearch, Agent, MCP, LSP, NotebookEdit, Tasks

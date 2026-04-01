@@ -2,13 +2,14 @@ import {
   ContinuousEventPriority,
   DefaultEventPriority,
   DiscreteEventPriority,
-  NoEventPriority,
 } from 'react-reconciler/constants.js'
 import { logError } from '../../utils/log.js'
 import { HANDLER_FOR_EVENT } from './event-handlers.js'
 import type { EventTarget, TerminalEvent } from './terminal-event.js'
 
 // --
+
+const NO_EVENT_PRIORITY = 0
 
 type DispatchListener = {
   node: EventTarget
@@ -160,7 +161,7 @@ type DiscreteUpdates = <A, B>(
  */
 export class Dispatcher {
   currentEvent: TerminalEvent | null = null
-  currentUpdatePriority: number = DefaultEventPriority as number
+  currentUpdatePriority: number = NO_EVENT_PRIORITY
   discreteUpdates: DiscreteUpdates | null = null
 
   /**
@@ -169,7 +170,7 @@ export class Dispatcher {
    * when no explicit priority has been set.
    */
   resolveEventPriority(): number {
-    if (this.currentUpdatePriority !== (NoEventPriority as number)) {
+    if (this.currentUpdatePriority !== NO_EVENT_PRIORITY) {
       return this.currentUpdatePriority
     }
     if (this.currentEvent) {

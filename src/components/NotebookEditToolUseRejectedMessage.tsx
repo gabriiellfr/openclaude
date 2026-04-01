@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import { relative } from 'path';
 import * as React from 'react';
 import { getCwd } from 'src/utils/cwd.js';

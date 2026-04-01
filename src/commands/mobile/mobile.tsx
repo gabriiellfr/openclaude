@@ -1,4 +1,4 @@
-import { c as _c } from "react/compiler-runtime";
+import { c as _c } from "react-compiler-runtime";
 import { toString as qrToString } from 'qrcode';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';

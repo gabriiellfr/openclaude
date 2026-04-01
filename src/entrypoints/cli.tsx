@@ -25,6 +25,41 @@ if (feature('ABLATION_BASELINE') && process.env.CLAUDE_CODE_ABLATION_BASELINE) {
   }
 }
 
+function isEnvTruthy(value: string | undefined): boolean {
+  if (!value) return false
+  const normalized = value.trim().toLowerCase()
+  return normalized !== '' && normalized !== '0' && normalized !== 'false' && normalized !== 'no'
+}
+
+function isLocalProviderUrl(baseUrl: string | undefined): boolean {
+  if (!baseUrl) return false
+  try {
+    const parsed = new URL(baseUrl)
+    return parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1' || parsed.hostname === '::1'
+  } catch {
+    return false
+  }
+}
+
+function validateProviderEnvOrExit(): void {
+  if (!isEnvTruthy(process.env.CLAUDE_CODE_USE_OPENAI)) {
+    return
+  }
+
+  const apiKey = process.env.OPENAI_API_KEY
+  const baseUrl = process.env.OPENAI_BASE_URL
+
+  if (apiKey === 'SUA_CHAVE') {
+    console.error('Invalid OPENAI_API_KEY: placeholder value SUA_CHAVE detected. Set a real key or unset for local providers.')
+    process.exit(1)
+  }
+
+  if (!apiKey && !isLocalProviderUrl(baseUrl)) {
+    console.error('OPENAI_API_KEY is required when CLAUDE_CODE_USE_OPENAI=1 and OPENAI_BASE_URL is not local.')
+    process.exit(1)
+  }
+}
+
 /**
  * Bootstrap entrypoint - checks for special flags before loading the full CLI.
  * All imports are dynamic to minimize module evaluation for fast paths.
@@ -40,6 +75,8 @@ async function main(): Promise<void> {
     console.log(`${MACRO.VERSION} (Claude Code)`);
     return;
   }
+
+  validateProviderEnvOrExit()
 
   // For all other paths, load the startup profiler
   const {
