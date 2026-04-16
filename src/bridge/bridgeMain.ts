@@ -1520,7 +1520,7 @@ export async function runBridgeLoop(
   // Skip when the loop exited fatally (env expired, auth failed, give-up) —
   // resume is impossible in those cases and the message would contradict the
   // error already printed.
-  // feature('KAIROS') gate: --session-id is ant-only; without the gate,
+  // feature('KAIROS') gate: --session-id is internal-only; without the gate,
   // revert to the pre-PR behavior (archive + deregister on every shutdown).
   if (
     feature('KAIROS') &&
@@ -1888,7 +1888,7 @@ export function parseArgs(args: string[]): ParsedArgs {
 
 async function printHelp(): Promise<void> {
   // Use EXTERNAL_PERMISSION_MODES for help text — internal modes (bubble)
-  // are ant-only and auto is feature-gated; they're still accepted by validation.
+  // are internal-only and auto is feature-gated; they're still accepted by validation.
   const { EXTERNAL_PERMISSION_MODES } = await import('../types/permissions.js')
   const modes = EXTERNAL_PERMISSION_MODES.join(', ')
   const showServer = await isMultiSessionSpawnEnabled()
@@ -2194,14 +2194,10 @@ export async function bridgeMain(args: string[]): Promise<void> {
 
   // Session ingress URL for WebSocket connections. In production this is the
   // same as baseUrl (Envoy routes /v1/session_ingress/* to session-ingress).
-  // Locally, session-ingress runs on a different port (9413) than the
-  // contain-provide-api (8211), so CLAUDE_BRIDGE_SESSION_INGRESS_URL must be
-  // set explicitly. Ant-only, matching CLAUDE_BRIDGE_BASE_URL.
+  // Locally, session-ingress may run on a different port, so
+  // CLAUDE_BRIDGE_SESSION_INGRESS_URL can override the default.
   const sessionIngressUrl =
-    process.env.USER_TYPE === 'ant' &&
-    process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL
-      ? process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL
-      : baseUrl
+    process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL || baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
     '../utils/git.js'
@@ -2356,7 +2352,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
   // environment_id and reuse that for registration (idempotent on the
   // backend). Left undefined otherwise — the backend rejects
   // client-generated UUIDs and will allocate a fresh environment.
-  // feature('KAIROS') gate: --session-id is ant-only; parseArgs already
+  // feature('KAIROS') gate: --session-id is internal-only; parseArgs already
   // rejects the flag when the gate is off, so resumeSessionId is always
   // undefined here in external builds — this guard is for tree-shaking.
   let reuseEnvironmentId: string | undefined
@@ -2851,10 +2847,7 @@ export async function runBridgeHeadless(
     )
   }
   const sessionIngressUrl =
-    process.env.USER_TYPE === 'ant' &&
-    process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL
-      ? process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL
-      : baseUrl
+    process.env.CLAUDE_BRIDGE_SESSION_INGRESS_URL || baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
     '../utils/git.js'
